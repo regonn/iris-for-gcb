@@ -1,0 +1,14 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/gcb', '.' ]
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'run', '-v', '/workspace:/workspace', 'gcr.io/$PROJECT_ID/gcb' ]
+
+images:
+- 'gcr.io/$PROJECT_ID/gcb'
+
+artifacts:
+  objects:
+    location: 'gs://[バケット名]/$PROJECT_ID'
+    paths: ['notebook/*.csv', 'notebook/*.html']
